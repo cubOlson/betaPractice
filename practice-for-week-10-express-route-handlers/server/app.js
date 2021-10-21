@@ -26,7 +26,6 @@ const app = express();
 app.use(express.json());
 
 app.use((req, res, next) => {
-  console.log('Body:', req.body);
   next();
 });
 
@@ -35,7 +34,7 @@ app.get('/artists', (req, res) => {
   res.json({artists});
 });
 
-app.get('/artists/:artistId', (req, res) => {
+app.get('/artists/:artistId(\\d+)', (req, res) => {
   const { artistId } = req.params;
   const artist = getArtistByArtistId(artistId);
   res.json({artist});
@@ -45,6 +44,34 @@ app.post('/artists', (req, res) => {
   const newArtist = addArtist(req.body);
   res.json({newArtist});
 });
+
+app.patch('/artists/:artistId(\\d+)', (req, res) => {
+  const { artistId } = req.params;
+  const editedArtist = editArtistByArtistId(artistId, req.body);
+  res.json({editedArtist});
+});
+
+app.delete('/artists/:artistId(\\d+)', (req, res) => {
+  const { artistId } = req.params;
+  deleteArtistByArtistId(artistId);
+  res.send('Successfully deleted');
+});
+
+app.get('/artists/latest', (req, res) => {
+  const latest = getLatestArtist();
+  res.json({latest});
+});
+
+app.get('/artists/:artistId(\\d+)/albums', (req, res) => {
+  const { artistId } = req.params;
+  const albums = getAlbumsByArtistId(artistId);
+  res.json({albums});
+});
+
+app.get('/artists/latest/albums', (req, res) => {
+  const albums = getAlbumsForLatestArtist();
+  res.json({albums});
+})
 
 // Your code here
 

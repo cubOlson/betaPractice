@@ -51,8 +51,9 @@ exports.addArtist = (data) => {
 };
 
 exports.editArtistByArtistId = (artistId, data) => {
+  //'artists' mispelled
   artists[artistId] = {
-    ...artist[artistId],
+    ...artists[artistId],
     ...data
   };
   return artists[artistId];

@@ -43,7 +43,9 @@ exports.getArtistByArtistId = (artistId) => {
 };
 
 exports.addArtist = (data) => {
+  //'artists' mispelled, data edited with artistId
   const artistId = newArtistId();
+  data.artistId = artistId;
   artists[artistId] = data;
   return artists[artistId];
 };

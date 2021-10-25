@@ -101,17 +101,19 @@ exports.getAlbumByAlbumId = (albumId) => {
 };
 
 exports.addAlbumByArtistId = (artistId, data) => {
+  //Added albumId to object, reformatted object
   const albumId = newAlbumId();
   albums[albumId] = {
-    artistId,
-    ...data
+    albumId,
+    ...data,
+    artistId
   };
   return albums[albumId];
 };
 
 exports.editAlbumByAlbumId = (albumId, data) => {
   albums[albumId] = {
-    ...album[albumId],
+    ...albums[albumId],
     ...data
   };
   return albums[albumId];
@@ -168,7 +170,8 @@ exports.getSongBySongId = (songId) => {
   return song;
 };
 
-exports.addSongByAlbumId = (albumId) => {
+exports.addSongByAlbumId = (albumId, data) => {
+  //added data to parameters
   const songId = newSongId();
   songs[songId] = {
     songId,

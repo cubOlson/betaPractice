@@ -71,8 +71,60 @@ app.get('/artists/:artistId(\\d+)/albums', (req, res) => {
 app.get('/artists/latest/albums', (req, res) => {
   const albums = getAlbumsForLatestArtist();
   res.json({albums});
-})
+});
 
+app.get('/albums/:albumId(\\d+)', (req, res) => {
+  const { albumId } = req.params;
+  const album = getAlbumByAlbumId(albumId);
+  res.json({ album });
+});
+
+app.post('/artist/:artistId(\\d+)/albums', (req, res) => {
+  const { artistId } = req.params;
+  const album = addAlbumByArtistId(artistId, req.body);
+  res.json({album});
+});
+
+app.put('/albums/:albumId(\\d+)', (req, res) => {
+  const { albumId } = req.params;
+  const editedAlbum = editAlbumByAlbumId(albumId, req.body);
+  res.json({editedAlbum});
+});
+
+app.delete('/albums/:albumId(\\d+)', (req, res) => {
+  const { albumId } = req.params;
+  deleteAlbumByAlbumId(albumId);
+  res.send('Successfully deleted');
+});
+
+app.get('/albums', (req, res) => {
+  const album = getFilteredAlbums(req.query.startsWith);
+  res.json({album});
+});
+
+app.get('/artists/:artistId(\\d+)/songs', (req, res) => {
+  const { artistId } = req.params;
+  const songs = getSongsByArtistId(artistId);
+  res.json({songs});
+});
+
+app.get('/albums/:albumId(\\d+)/songs', (req, res) => {
+  const { albumId } = req.params;
+  const songs = getSongsByAlbumId(albumId);
+  res.json({songs});
+});
+
+app.get('/songs/:songId(\\d+)', (req, res) => {
+  const { songId } = req.params;
+  const song = getSongBySongId(songId);
+  res.json({song});
+});
+
+app.post('/albums/:albumId(\\d+)/songs', (req, res) => {
+  const { albumId } = req.params;
+  const song = addSongByAlbumId(albumId, req.body);
+  res.json({song});
+});
 // Your code here
 
 const port = 5000;
